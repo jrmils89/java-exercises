@@ -1,6 +1,6 @@
 # Overview
 
-Project for 
+Project for random coding exercises in Java
 
 # Build
 ```
