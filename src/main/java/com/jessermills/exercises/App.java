@@ -1,6 +1,6 @@
 package com.jessermills.exercises;
 
-import com.jessermills.exercises.coding.ExampleExercise;
+import com.jessermills.exercises.coding.StringExercises;
 
 /**
  * Hello world!
@@ -10,7 +10,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        ExampleExercise exampleExercise = new ExampleExercise();
-        exampleExercise.testMe();
+        StringExercises.reverseString("Hello");
     }
 }
