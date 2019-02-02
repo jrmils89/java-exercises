@@ -2,6 +2,9 @@ package com.jessermills.exercises.coding;
 
 import java.util.HashMap;
 
+
+
+
 public class ListExercises {
     public ListExercises() {
 
@@ -9,7 +12,7 @@ public class ListExercises {
 
     public static void transformWords(String[] words) {
 
-        HashMap<String, Boolean> shortenedWords = new HashMap<String, Boolean>();
+        HashMap<String, String> shortenedWords = new HashMap<String, String>();
 
 
         for (String word : words) {
@@ -30,7 +33,7 @@ public class ListExercises {
 
     // Note: this is a static method just for testing purposes, in a production env I'd make this private as it modifies
     // one of the inputs without returning it, which is not a practice I like
-    public static String shortenWordValidatingPreviousAcronyms(HashMap<String, Boolean> shortenedWords, String word) {
+    public static String shortenWordValidatingPreviousAcronyms(HashMap<String, String> shortenedWords,  String word) {
 
         // If the word is empty, return null
         if (word.isEmpty())
@@ -43,10 +46,15 @@ public class ListExercises {
         // check here because we've already checked for an empty string above
         String shortenedWord = shortenWord(word, offset);
 
+        if (shortenedWords.containsKey(shortenedWord) && shortenedWords.get(shortenedWord).equals(word)) {
+            return shortenedWord;
+        }
+
 
         // If the shortned word didn't already exist, add it to the map and return it
         if (!shortenedWords.containsKey(shortenedWord)) {
-            shortenedWords.put(shortenedWord, true);
+
+            shortenedWords.put(shortenedWord, word);
 
             return shortenedWord;
         }
@@ -55,24 +63,31 @@ public class ListExercises {
          * Keep attempting to build new shortened words, increasing the offset until we find a unique
          * acronym.
          */
-        while (shortenedWords.containsKey(shortenedWord) && offset < word.length()) {
+        while (shortenedWords.containsKey(shortenedWord) && !shortenedWords.get(shortenedWord).equals(word) && offset < word.length()) {
             shortenedWord = shortenWord(word, offset);
             offset += 1;
         }
 
         /**
-         * Check if the shortned word exists already in the map, this is an edge
+         * If the shortenedWord exists and the original word is the same word, return the same abbrevaition
+         */
+        if (shortenedWords.containsKey(shortenedWord) && shortenedWords.get(shortenedWord).equals(word))
+            return shortenedWord;
+
+
+        /**
+         * Check if the shortenedWord word exists already in the map, this is an edge
          * case that exists where all variations of the word already were created
          */
-
-        if (shortenedWords.containsKey(shortenedWord))
+        if (shortenedWords.containsKey(shortenedWord) && !shortenedWords.get(shortenedWord).equals(word))
             return null;
 
         /**
          * If the acronym doesn't exist add it to the map as it's a new acronym
          * Once we do that we can return the new word
          */
-        shortenedWords.put(shortenedWord, true);
+        shortenedWords.put(shortenedWord, word);
+
         return shortenedWord;
     }
 

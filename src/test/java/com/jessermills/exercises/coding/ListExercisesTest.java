@@ -22,10 +22,10 @@ public class ListExercisesTest
 
 
     // Small tuple class for testing purposes
-    public class Tuple<X, Y> {
+    public class TestTuple<X, Y> {
         public final X x;
         public final Y y;
-        public Tuple(X x, Y y) {
+        public TestTuple(X x, Y y) {
             this.x = x;
             this.y = y;
         }
@@ -43,14 +43,14 @@ public class ListExercisesTest
 
     public void testShortenWord() {
 
-        List<Tuple<String, String>> originalWordAndNewWord = new ArrayList<>();
+        List<TestTuple<String, String>> originalWordAndNewWord = new ArrayList<>();
 
-        originalWordAndNewWord.add(new Tuple<>("internationalization", "i18n"));
-        originalWordAndNewWord.add(new Tuple<>("aaa", "aaa"));
-        originalWordAndNewWord.add(new Tuple<>("", null));
+        originalWordAndNewWord.add(new TestTuple<>("internationalization", "i18n"));
+        originalWordAndNewWord.add(new TestTuple<>("aaa", "aaa"));
+        originalWordAndNewWord.add(new TestTuple<>("", null));
 
 
-        for (Tuple<String, String> word : originalWordAndNewWord) {
+        for (TestTuple<String, String> word : originalWordAndNewWord) {
 
             String newWord = ListExercises.shortenWord(word.x, 0);
             assertEquals(word.y, newWord);
@@ -59,24 +59,28 @@ public class ListExercisesTest
 
     public void testShortenWordWithNoDuplicationAllowed() {
 
-        Tuple<String, String>[] originalWordAndNewWord = new Tuple[]{
-                new Tuple<>("internationalization", "i18n"),
-                new Tuple<>("internationalization", "in17n"),
-                new Tuple<>("internationalization", "int16n"),
-                new Tuple<>("aaa", "aaa"),
-                new Tuple<>("", null)
+        TestTuple<String, String>[] originalWordAndNewWord = new TestTuple[]{
+                new TestTuple<>("internationalization", "i18n"),
+                new TestTuple<>("internationalization", "i18n"),
+                new TestTuple<>("internationalization", "i18n"),
+                new TestTuple<>("intdrnationalization", "in17n"),
+                new TestTuple<>("intdrnazionalization", "int16n"),
+                new TestTuple<>("intdrnazionalization", "int16n"),
+                new TestTuple<>("aaa", "aaa"),
+                new TestTuple<>("", null)
         };
 
-        HashMap<String, Boolean> shortenedWords = new HashMap<>();
+        HashMap<String, String> shortenedWords = new HashMap<>();
 
 
-        for (Tuple<String, String> word : originalWordAndNewWord) {
+        for (TestTuple<String, String> word : originalWordAndNewWord) {
 
             String newWord = ListExercises.shortenWordValidatingPreviousAcronyms(shortenedWords, word.x);
             assertEquals(word.y, newWord);
         }
 
     }
+
 
 
 }
