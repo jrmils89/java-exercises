@@ -46,12 +46,13 @@ public class ListExercises {
         // check here because we've already checked for an empty string above
         String shortenedWord = shortenWord(word, offset);
 
+        // If the map contains the shortenedWord and the word is the same, just return the original abbreviation
         if (shortenedWords.containsKey(shortenedWord) && shortenedWords.get(shortenedWord).equals(word)) {
             return shortenedWord;
         }
 
 
-        // If the shortned word didn't already exist, add it to the map and return it
+        // If the shortened word didn't already exist, add it to the map and return it
         if (!shortenedWords.containsKey(shortenedWord)) {
 
             shortenedWords.put(shortenedWord, word);
@@ -61,7 +62,7 @@ public class ListExercises {
 
         /**
          * Keep attempting to build new shortened words, increasing the offset until we find a unique
-         * acronym.
+         * acronym. Break out of this while loop if the acronym and the word already existed
          */
         while (shortenedWords.containsKey(shortenedWord) && !shortenedWords.get(shortenedWord).equals(word) && offset < word.length()) {
             shortenedWord = shortenWord(word, offset);
@@ -69,22 +70,24 @@ public class ListExercises {
         }
 
         /**
-         * If the shortenedWord exists and the original word is the same word, return the same abbrevaition
+         * If the shortened word exists and the original word is the same word, return the same abbreviation
          */
         if (shortenedWords.containsKey(shortenedWord) && shortenedWords.get(shortenedWord).equals(word))
             return shortenedWord;
 
 
         /**
-         * Check if the shortenedWord word exists already in the map, this is an edge
-         * case that exists where all variations of the word already were created
+         * Check if the shortened word  exists already in the map, this is an edge
+         * case that exists where all variations of the word already were created.
+         *
+         * We're just returning null here in that case, though the error case could be different
          */
         if (shortenedWords.containsKey(shortenedWord) && !shortenedWords.get(shortenedWord).equals(word))
             return null;
 
         /**
          * If the acronym doesn't exist add it to the map as it's a new acronym
-         * Once we do that we can return the new word
+         * Once we do that we can return the new abbreviation
          */
         shortenedWords.put(shortenedWord, word);
 
